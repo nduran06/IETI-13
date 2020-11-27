@@ -1,4 +1,46 @@
-# IETI-13
+# 13. Android Local Storage & List Views
+
+## Pruba de funcionamiento
+
+![](img/prueba.gif)
+
+## Back
+
+3.2-android-secure-rest-api
+
+```
+http://localhost:8080
+``` 
+
+### Run
+
+```
+cd 3.2-android-secure-rest-api/secure-api-spring-boot
+gradle bootRun
+```
+
+## Front 
+
+3.3-android-local-storage-list-views
+
+```
+Cambiar IP de BASE_URL en co.edu.eci.ieti.android.network.RetrofitNetwork
+``` 
+
+![](img/url.png)
+
+### Run
+
+```
+Android studio
+```
+
+### Credentials
+
+```
+email: test@mail.com
+password: prueba
+```
 
 ## Código de honor
 
