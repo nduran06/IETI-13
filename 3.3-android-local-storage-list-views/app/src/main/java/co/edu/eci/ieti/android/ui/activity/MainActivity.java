@@ -36,8 +36,11 @@ public class MainActivity
 
     private Storage storage;
     private RetrofitNetwork retrofitNetwork;
-    private RecyclerView recyclerView;
     private TasksAdapter tasksAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private List<Task> taskList;
 
 
     @Override
@@ -47,9 +50,7 @@ public class MainActivity
         setContentView( R.layout.activity_main );
 
         storage = new Storage( this );
-        this.tasksAdapter = new TasksAdapter();
         setContentView( R.layout.activity_main );
-
         Toolbar toolbar = findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
 
@@ -74,29 +75,38 @@ public class MainActivity
         NavigationView navigationView = findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
 
-        this.recyclerView = findViewById(R.id.recyclerView);
-        configureRecyclerView();
+        //---------------------------------------//
 
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
-        List<Task> tasks = taskViewModel.getAllTasks(this, storage.getToken());
+        this.taskList = taskViewModel.getAllTasks(this, storage.getToken());
         System.out.println("---------------------------- Tasks -------------------------------------");
-        System.out.println(tasks);
+        System.out.println(taskList);
+
+        this.tasksAdapter = new TasksAdapter(this.taskList);
+
+        this.recyclerView = findViewById(R.id.recyclerView);
+        configureRecyclerView();
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tasksAdapter.updateTasks(tasks);
+
+                tasksAdapter.updateTasks(taskList);
             }
         });
+
+
 
     }
 
     private void configureRecyclerView()
+
     {
+        this.layoutManager = new LinearLayoutManager(this);
+        this.recyclerView.setLayoutManager(this.layoutManager);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setAdapter(tasksAdapter);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(this.tasksAdapter);
     }
 
     @Override

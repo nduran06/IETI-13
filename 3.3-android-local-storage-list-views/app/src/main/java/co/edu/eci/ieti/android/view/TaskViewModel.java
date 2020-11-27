@@ -85,10 +85,23 @@ public class TaskViewModel extends ViewModel {
         this.retrofit = new RetrofitNetwork(token);
 
         if (this.taskList == null) {
-            taskList = new ArrayList<Task>();
+            this.taskList = new ArrayList<Task>();
             loadAllTasks(context);
         }
-        return this.taskList;
+
+        synchronized (dynamicObject){
+            while(this.taskList.size() == 0){
+                try {
+                    dynamicObject.wait();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("---------------------- taskList gettttttttttttttt ----------------------------------");
+
+            return this.taskList;
+        }
     }
 
 

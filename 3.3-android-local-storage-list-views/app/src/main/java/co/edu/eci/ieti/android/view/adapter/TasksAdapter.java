@@ -19,7 +19,11 @@ import co.edu.eci.ieti.android.model.Task;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>  {
 
-    List<Task> taskList = null;
+    private List<Task> taskList;
+
+    public TasksAdapter( List<Task> taskList) {
+        this.taskList = taskList;
+    }
 
     @NonNull
     @Override
